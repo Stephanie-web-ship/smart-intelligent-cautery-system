@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Intelligent Cautery System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 80px auto;
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .value {
+            color: #00ffd5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Smart Intelligent Cautery System (SICS)</h1>
+
+    <label>Select Biological Material:</label>
+    <select id="material" onchange="fetchData()">
+        <option value="">-- Select --</option>
+        <option value="Tissue">Tissue</option>
+        <option value="Intestine">Intestine</option>
+        <option value="Skin">Skin</option>
+    </select>
+
+    <div class="row">
+        <div class="label">Minimum Effective Temperature</div>
+        <div class="value" id="minimum">--</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Safe Operating Zone</div>
+        <div class="value" id="safe">--</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Threshold Temperature</div>
+        <div class="value" id="threshold">--</div>
+    </div>
+
+</div>
+
+<script>
+function fetchData() {
+    const material = document.getElementById("material").value;
+
+    if (material === "") return;
+
+    fetch("/get_data/" + material)
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("minimum").innerText = data.minimum;
+        document.getElementById("safe").innerText = data.safe;
+        document.getElementById("threshold").innerText = data.threshold;
+    });
+}
+</script>
+
+</body>
+</html>
